@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Productos</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+
+<h2>Crear Producto ☕</h2>
+
+<!-- ✅ FORM REAL -->
+<form id="productForm" class="form">
+
+    <input id="name" placeholder="Nombre" required>
+    <input id="price" type="number" placeholder="Precio" required>
+    <input id="stock" type="number" placeholder="Stock" required>
+
+    <button type="submit">Guardar</button>
+
+</form>
+
+<div id="message"></div>
+
+<h2>Lista Productos</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Stock</th>
+    </tr>
+    </thead>
+
+    <tbody id="productTable"></tbody>
+</table>
+
+<!-- ✅ JS AL FINAL -->
+<script src="/js/app.js"></script>
+
+</body>
+</html>
