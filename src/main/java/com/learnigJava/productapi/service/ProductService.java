@@ -6,6 +6,7 @@ import com.learnigJava.productapi.mapper.ProductMapper;
 import com.learnigJava.productapi.model.Product;
 import com.learnigJava.productapi.repository.ProductRepository;
 import org.springframework.stereotype.Service;
+import com.learnigJava.productapi.exception.ResourceNotFoundException;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class ProductService {
     }
 
     public List<ProductResponseDTO> getAll(){
-        return repository.findAll()
+        return repository.findAllByOrderByIdAsc()
                 .stream()
                 .map(mapper::toResponseDTO)
                 .toList();
@@ -35,15 +36,17 @@ public class ProductService {
 
     public ProductResponseDTO getById(Long id){
         Product product = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Product with id " + id + " not found"));
         return mapper.toResponseDTO(product);
     }
 
     public ProductResponseDTO update(Long id, ProductRequestDTO dto){
         Product existing = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Product with id " + id + " not found"));
 
-        // Aquí sí reemplaza todo
+
         Product updated = mapper.toEntity(dto);
         updated.setId(existing.getId());
 
@@ -54,7 +57,7 @@ public class ProductService {
         Product existing = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
 
-        // 🔥 Aquí está el PATCH real
+
         mapper.updateProductFromDto(dto, existing);
 
         Product saved = repository.save(existing);
@@ -62,6 +65,13 @@ public class ProductService {
     }
 
     public void delete(Long id){
-        repository.deleteById(id);
+
+        Product product = repository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Product with id " + id + " not found"
+                        ));
+
+        repository.delete(product);
     }
 }

@@ -10,7 +10,8 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST) // ⭐ CLAVE
+    // VALIDATION ERRORS
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String,String> handleValidation(
             MethodArgumentNotValidException ex){
@@ -23,9 +24,20 @@ public class GlobalExceptionHandler {
                         errors.put(
                                 error.getField(),
                                 error.getDefaultMessage()
-                        )
-                );
+                        ));
 
         return errors;
+    }
+
+    // NOT FOUND
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public Map<String,String> handleNotFound(
+            ResourceNotFoundException ex){
+
+        Map<String,String> error = new HashMap<>();
+        error.put("error", ex.getMessage());
+
+        return error;
     }
 }
