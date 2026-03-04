@@ -28,7 +28,7 @@ public class ProductService {
     }
 
     public List<ProductResponseDTO> getAll(){
-        return repository.findAllByOrderByIdAsc()
+        return repository.findAllByOrderByIdDesc()
                 .stream()
                 .map(mapper::toResponseDTO)
                 .toList();
