@@ -1,7 +1,7 @@
 # ProductAPI - Gestión de Productos con Spring Boot
 
 ![Estado del Proyecto](https://img.shields.io/badge/Status-Completo-lightgrey?logo=github&logoColor=black)
-![Java](https://img.shields.io/badge/Java-17-lightgrey?logo=java&logoColor=orange)
+![Java](https://img.shields.io/badge/Java-21-lightgrey?logo=java&logoColor=orange)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.2.0-lightgrey?logo=spring&logoColor=green)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-lightgrey?logo=postgresql&logoColor=blue)
 ![Frontend](https://img.shields.io/badge/HTML%2CCSS%2CJS-lightgrey?logo=html5&logoColor=orange)
@@ -23,7 +23,7 @@ La aplicación está desplegada en **Railway** y puedes probarla directamente en
 **ProductAPI** es una API REST para la gestión de productos, desarrollada con **Spring Boot**, que permite realizar operaciones de **CRUD** (Crear, Leer, Actualizar y Eliminar) sobre productos.  
 Incluye un **dashboard interactivo** para visualizar, filtrar y administrar productos de manera rápida y dinámica, con buena experiencia de usuario (UI/UX).
 
-Este proyecto está pensado tanto para **aprendizaje** como para mostrar capacidades de desarrollo backend y frontend integradas.
+Este proyecto está pensado tanto para **aprendizaje** como para mostrar capacidades de desarrollo backend principalmente y frontend integradas. 
 
 ---
 
@@ -52,12 +52,12 @@ Este proyecto está pensado tanto para **aprendizaje** como para mostrar capacid
 
 ## **Tecnologías utilizadas**
 
-| Capa | Tecnología |
-|------|------------|
-| Backend | Java 17, Spring Boot 3.2, Spring Data JPA, Hibernate |
-| Base de datos | PostgreSQL 15 |
-| Frontend | HTML, CSS, JavaScript, Bootstrap |
-| Herramientas | Git, GitHub, Maven, Visual Studio Code / IntelliJ |
+| Capa | Tecnología                                               |
+|------|----------------------------------------------------------|
+| Backend | Java 21, Spring Boot 3.2, Spring Data JPA, Hibernate     |
+| Base de datos | PostgreSQL 15                                            |
+| Frontend | HTML, CSS, JavaScript, Bootstrap                         |
+| Herramientas | Git, GitHub, Maven, IntelliJ            |
 | Arquitectura | API REST, arquitectura en capas, DTOs, manejo de excepciones |
 
 ---
@@ -104,7 +104,7 @@ productapi/
 
 ### Prerrequisitos
 
-- Java 17 o superior
+- Java 21
 - Maven
 - PostgreSQL
 - Git
