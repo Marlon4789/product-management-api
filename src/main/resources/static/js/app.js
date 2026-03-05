@@ -1,6 +1,6 @@
 /* ================= CONFIG ================= */
 
-const API = "http://localhost:8085/products";
+const API = "/products";
 
 let products = [];
 let filtered = [];
