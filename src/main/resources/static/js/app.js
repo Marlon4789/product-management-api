@@ -153,8 +153,10 @@ async function createProduct() {
 
     newProductId = saved.id;
 
+    products = products.filter(p => p.id !== saved.id);
     products.unshift(saved);
-    filtered.unshift(saved);
+
+    filtered = [...products];
 
     document.getElementById("productForm").reset();
 
@@ -189,8 +191,8 @@ function renderTable() {
 
     const start = (currentPage - 1) * rows;
 
-    // Ordenar una copia de filtered de menor a mayor stock
-    const sorted = [...filtered].sort((a, b) => a.stock - b.stock);
+    // Respetar el orden que viene del backend (ID descendente)
+    const sorted = [...filtered];
 
     // Paginar sobre la lista ordenada
     sorted
