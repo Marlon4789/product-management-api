@@ -1,4 +1,14 @@
-/* ================= CONFIG ================= */
+/* ================================================
+   APP.JS — INVENTARIO PREMIUM
+   Dark Mode es el tema PRINCIPAL y por defecto.
+   La tabla muestra un índice de conteo ordenado por stock
+   (de menor a mayor), NO el ID de la base de datos.
+   ================================================ */
+
+
+/* ================================================
+   SECCIÓN 1: CONFIGURACIÓN Y ESTADO GLOBAL
+   ================================================ */
 
 const API = "/products";
 
@@ -15,9 +25,14 @@ let currentPage = 1;
 const rows = 5;
 
 
-/* ================= INIT ================= */
+/* ================================================
+   SECCIÓN 2: INICIALIZACIÓN AL CARGAR LA PÁGINA
+   ================================================ */
 
 document.addEventListener("DOMContentLoaded", () => {
+
+    // Aplicar tema guardado (dark es el default)
+    initTheme();
 
     document.getElementById("createBtn")
         .addEventListener("click", createProduct);
@@ -31,11 +46,57 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("search")
         .addEventListener("input", searchProducts);
 
+    document.getElementById("darkToggle")
+        .addEventListener("click", toggleTheme);
+
     loadProducts();
 });
 
 
-/* ================= LOAD ================= */
+/* ================================================
+   SECCIÓN 3: TOGGLE DE TEMA — DARK (default) ↔ LIGHT
+   Dark mode es el DEFAULT: el body no lleva ninguna clase.
+   Light mode se activa añadiendo la clase "light-mode".
+   La preferencia se guarda en localStorage.
+   ================================================ */
+
+function initTheme() {
+    const saved = localStorage.getItem("theme");
+
+    // Solo aplicar light-mode si el usuario lo eligió antes
+    if (saved === "light") {
+        document.body.classList.add("light-mode");
+    }
+
+    updateThemeIcon();
+}
+
+function toggleTheme() {
+    document.body.classList.toggle("light-mode");
+
+    const isLight = document.body.classList.contains("light-mode");
+    localStorage.setItem("theme", isLight ? "light" : "dark");
+
+    updateThemeIcon();
+}
+
+function updateThemeIcon() {
+    const btn = document.getElementById("darkToggle");
+    if (!btn) return;
+
+    const isLight = document.body.classList.contains("light-mode");
+
+    // En dark mode: muestra el sol (para pasar a light)
+    // En light mode: muestra la luna (para volver a dark)
+    btn.innerHTML = isLight
+        ? '<i class="bi bi-moon-fill"></i>'
+        : '<i class="bi bi-sun-fill"></i>';
+}
+
+
+/* ================================================
+   SECCIÓN 4: CARGA DE PRODUCTOS
+   ================================================ */
 
 async function loadProducts() {
 
@@ -55,31 +116,19 @@ async function loadProducts() {
     updateDashboard();
 }
 
-// ===== Dark mode =========
 
-const toggleBtn = document.getElementById("darkToggle");
-
-toggleBtn.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
-
-    if(document.body.classList.contains("dark-mode")){
-        toggleBtn.innerHTML = '<i class="bi bi-sun-fill"></i>';
-    } else {
-        toggleBtn.innerHTML = '<i class="bi bi-moon-fill"></i>';
-    }
-});
-
-
-/* ================= CREATE ================= */
+/* ================================================
+   SECCIÓN 5: CREAR PRODUCTO
+   ================================================ */
 
 async function createProduct() {
 
-    const nameInput = document.getElementById("name");
+    const nameInput  = document.getElementById("name");
     const priceInput = document.getElementById("price");
     const stockInput = document.getElementById("stock");
 
     const product = {
-        name: nameInput.value.trim(),
+        name:  nameInput.value.trim(),
         price: Number(priceInput.value),
         stock: Number(stockInput.value)
     };
@@ -109,6 +158,12 @@ async function createProduct() {
 
     document.getElementById("productForm").reset();
 
+    // Cerrar el modal automáticamente al guardar
+    const createModal = bootstrap.Modal.getInstance(
+        document.getElementById("createModal")
+    );
+    if (createModal) createModal.hide();
+
     currentPage = 1;
 
     renderTable();
@@ -119,7 +174,13 @@ async function createProduct() {
 }
 
 
-/* ================= TABLE ================= */
+/* ================================================
+   SECCIÓN 6: TABLA — RENDERIZADO CON CONTEO POR STOCK
+
+   Se muestra un número de conteo visual (1, 2, 3...)
+   ordenado de MENOR a MAYOR por stock.
+   El ID de la base de datos nunca aparece en pantalla.
+   ================================================ */
 
 function renderTable() {
 
@@ -128,17 +189,24 @@ function renderTable() {
 
     const start = (currentPage - 1) * rows;
 
-    filtered
+    // Ordenar una copia de filtered de menor a mayor stock
+    const sorted = [...filtered].sort((a, b) => a.stock - b.stock);
+
+    // Paginar sobre la lista ordenada
+    sorted
         .slice(start, start + rows)
-        .forEach(p => {
+        .forEach((p, indexInPage) => {
+
+            // Índice visual global que el usuario ve (1, 2, 3, 4...)
+            const visualIndex = start + indexInPage + 1;
 
             table.innerHTML += `
             <tr id="row-${p.id}"
                 class="
-                ${p.id === newProductId ? 'row-new' : ''}
+                ${p.id === newProductId     ? 'row-new'     : ''}
                 ${p.id === updatedProductId ? 'row-updated' : ''}
                 ">
-                <td>${p.id}</td>
+                <td>${visualIndex}</td>
                 <td>${p.name}</td>
                 <td>$ ${formatCurrency(p.price)}</td>
                 <td>${formatCurrency(p.stock)}</td>
@@ -157,13 +225,15 @@ function renderTable() {
         });
 
     setTimeout(() => {
-        newProductId = null;
+        newProductId     = null;
         updatedProductId = null;
     }, 1500);
 }
 
 
-/* ================= EDIT ================= */
+/* ================================================
+   SECCIÓN 7: EDITAR PRODUCTO
+   ================================================ */
 
 function openEdit(id) {
 
@@ -171,7 +241,7 @@ function openEdit(id) {
 
     const p = products.find(x => x.id === id);
 
-    document.getElementById("editName").value = p.name;
+    document.getElementById("editName").value  = p.name;
     document.getElementById("editPrice").value = p.price;
     document.getElementById("editStock").value = p.stock;
 
@@ -183,7 +253,7 @@ function openEdit(id) {
 async function updateProduct() {
 
     const product = {
-        name: document.getElementById("editName").value.trim(),
+        name:  document.getElementById("editName").value.trim(),
         price: Number(document.getElementById("editPrice").value),
         stock: Number(document.getElementById("editStock").value)
     };
@@ -206,7 +276,9 @@ async function updateProduct() {
 }
 
 
-/* ================= DELETE ================= */
+/* ================================================
+   SECCIÓN 8: ELIMINAR PRODUCTO
+   ================================================ */
 
 function openDelete(id) {
 
@@ -224,9 +296,7 @@ async function deleteConfirmed() {
 
     setTimeout(async () => {
 
-        await fetch(`${API}/${deleteId}`, {
-            method: "DELETE"
-        });
+        await fetch(`${API}/${deleteId}`, { method: "DELETE" });
 
         bootstrap.Modal
             .getInstance(document.getElementById("deleteModal"))
@@ -240,7 +310,9 @@ async function deleteConfirmed() {
 }
 
 
-/* ================= SEARCH ================= */
+/* ================================================
+   SECCIÓN 9: BÚSQUEDA / FILTRO
+   ================================================ */
 
 function searchProducts(e) {
 
@@ -257,7 +329,9 @@ function searchProducts(e) {
 }
 
 
-/* ================= PAGINATION ================= */
+/* ================================================
+   SECCIÓN 10: PAGINACIÓN
+   ================================================ */
 
 function renderPagination() {
 
@@ -266,7 +340,6 @@ function renderPagination() {
 
     const totalPages = Math.ceil(filtered.length / rows);
 
-    /* Ajuste inteligente de página */
     if (currentPage > totalPages && totalPages > 0) {
         currentPage = totalPages;
     }
@@ -279,11 +352,8 @@ function renderPagination() {
     for (let i = 1; i <= totalPages; i++) {
 
         const li = document.createElement("li");
-
         li.className = `page-item ${i === currentPage ? 'active' : ''}`;
-
         li.innerHTML = `<button class="page-link">${i}</button>`;
-
         li.style.cursor = "pointer";
         li.onclick = () => changePage(i);
 
@@ -315,14 +385,9 @@ function changePage(p) {
 }
 
 
-/* ================= DASHBOARD ================= */
-
-function formatCurrency(value) {
-    return new Intl.NumberFormat("es-CO", {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-    }).format(value);
-}
+/* ================================================
+   SECCIÓN 11: DASHBOARD — TARJETAS DE RESUMEN
+   ================================================ */
 
 function updateDashboard() {
 
@@ -344,12 +409,22 @@ function updateDashboard() {
         .textContent = "$ " + formatCurrency(Math.round(totalValue));
 }
 
-/* ================= TOAST ================= */
+function formatCurrency(value) {
+    return new Intl.NumberFormat("es-CO", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    }).format(value);
+}
+
+
+/* ================================================
+   SECCIÓN 12: TOAST — NOTIFICACIONES
+   ================================================ */
 
 function showToast(message, type = "success") {
 
     const toastEl = document.getElementById("appToast");
-    const body = document.getElementById("toastBody");
+    const body    = document.getElementById("toastBody");
 
     toastEl.classList.remove("bg-success", "bg-danger");
 
@@ -366,4 +441,3 @@ function showToast(message, type = "success") {
         autohide: true
     }).show();
 }
-

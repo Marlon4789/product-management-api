@@ -1,57 +1,223 @@
-/* ===============================
-   PREMIUM TYPOGRAPHY
-================================= */
+/* ================================================
+   STYLES.CSS — INVENTARIO PREMIUM
+   Dark Mode es el tema PRINCIPAL y por defecto.
+   Light Mode es el tema secundario/alternativo.
+   ================================================ */
+
+
+/* ================================================
+   SECCIÓN 1: IMPORTACIÓN DE FUENTES
+   ================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+
+/* ================================================
+   SECCIÓN 2: VARIABLES GLOBALES (DARK MODE DEFAULT)
+   Todas las variables apuntan al tema oscuro por defecto.
+   Light mode sobreescribe las variables en body.light-mode.
+   ================================================ */
+
+:root {
+    /* Fondos */
+    --bg-body:        #0f172a;
+    --bg-card:        #1e293b;
+    --bg-card-header: #111827;
+    --bg-table:       #1e293b;
+    --bg-table-head:  #0b1220;
+    --bg-table-hover: #273449;
+    --bg-input:       #0f172a;
+    --bg-pagination:  #1e293b;
+    --bg-toast:       #1e293b;
+    --bg-toast-header:#0f172a;
+    --bg-modal:       #1e293b;
+    --bg-btn-primary: #334155;
+    --bg-btn-hover:   #475569;
+    --bg-page-active: #475569;
+    --bg-search:      #1e293b;
+
+    /* Textos */
+    --text-primary:   #f1f5f9;
+    --text-secondary: #94a3b8;
+    --text-muted:     #64748b;
+    --text-heading:   #ffffff;
+    --text-table:     #e2e8f0;
+
+    /* Bordes */
+    --border-color:   #334155;
+    --border-input:   #334155;
+    --border-card:    #334155;
+    --border-toast:   #334155;
+
+    /* Acentos */
+    --accent-edit:    #3b82f6;
+    --accent-delete:  #ef4444;
+    --accent-focus:   #6366f1;
+    --accent-search-focus: #3A4657;
+
+    /* Sombras */
+    --shadow-card:    0 8px 25px rgba(0, 0, 0, 0.4);
+    --shadow-toast:   0 8px 24px rgba(0, 0, 0, 0.45);
+    --shadow-table:   0 4px 8px rgba(0, 0, 0, 0.2);
+
+    /* Radios */
+    --radius-card:    16px;
+    --radius-input:   12px;
+    --radius-btn:     12px;
+    --radius-pagination: 10px;
+    --radius-toast:   14px;
+    --radius-table:   12px;
+}
+
+
+/* ================================================
+   SECCIÓN 3: LIGHT MODE (tema secundario)
+   Sobreescribe las variables cuando se aplica la clase .light-mode al body.
+   ================================================ */
+
+body.light-mode {
+    /* Fondos */
+    --bg-body:        #f8fafc;
+    --bg-card:        #ffffff;
+    --bg-card-header: #1f2937;
+    --bg-table:       #BFBFBF;
+    --bg-table-head:  #1f2937;
+    --bg-table-hover: #D6D6D6;
+    --bg-input:       #ffffff;
+    --bg-pagination:  #ffffff;
+    --bg-toast:       #ffffff;
+    --bg-toast-header:#f9fafb;
+    --bg-modal:       #ffffff;
+    --bg-btn-primary: #1e293b;
+    --bg-btn-hover:   #273449;
+    --bg-page-active: #111827;
+    --bg-search:      #ffffff;
+
+    /* Textos */
+    --text-primary:   #1f2937;
+    --text-secondary: #374151;
+    --text-muted:     #6b7280;
+    --text-heading:   #111827;
+    --text-table:     #1f2937;
+
+    /* Bordes */
+    --border-color:   #e5e7eb;
+    --border-input:   #969696;
+    --border-card:    #e5e7eb;
+    --border-toast:   #e5e7eb;
+
+    /* Acentos */
+    --accent-edit:    #0d6efd;
+    --accent-delete:  #dc3545;
+    --accent-focus:   #6366f1;
+    --accent-search-focus: rgba(99, 102, 241, 0.15);
+
+    /* Sombras */
+    --shadow-card:    0 2px 8px rgba(0, 0, 0, 0.08);
+    --shadow-toast:   0 10px 25px rgba(0, 0, 0, 0.12);
+    --shadow-table:   0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+
+/* ================================================
+   SECCIÓN 4: BASE — TIPOGRAFÍA Y CUERPO
+   ================================================ */
 
 body {
     font-family: 'Inter', sans-serif;
     letter-spacing: -0.2px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: var(--bg-body);
+    color: var(--text-primary);
 }
-
 
 h1, h2, h3, h4, h5 {
     letter-spacing: -0.5px;
     font-weight: 600;
+    color: var(--text-heading);
 }
-
-.box-color{
-    background-color: #1e293b;
-}
-
 
 small {
     font-weight: 500;
+    color: var(--text-secondary);
 }
 
-.table th {
-    font-weight: 600;
-    font-size: 16px;
+.text-muted {
+    color: var(--text-muted) !important;
 }
 
-.table td {
-    font-size: 16px;
+
+/* ================================================
+   SECCIÓN 5: TRANSICIONES SUAVES AL CAMBIAR TEMA
+   ================================================ */
+
+body,
+.card,
+.table,
+.table th,
+.table td,
+.pagination .page-link,
+.search-input,
+.create-btn,
+.toast,
+.modal-content {
+    transition:
+        background-color 0.55s ease,
+        color 0.45s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
 }
 
-/* ===============================
-   GLOBAL STYLES
-================================= */
+i, .bi {
+    transition: color 0.35s ease;
+}
+
+
+/* ================================================
+   SECCIÓN 6: CARDS
+   ================================================ */
 
 .card {
-    border-radius: 12px;
+    border-radius: var(--radius-card);
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border-card);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
 }
 
-/* ===============================
-   DASHBOARD
-================================= */
+.card.bg-dark {
+    background-color: var(--bg-card-header) !important;
+}
+
+.box-color {
+    background-color: var(--bg-card);
+}
+
+
+/* ================================================
+   SECCIÓN 7: DASHBOARD CARDS
+   ================================================ */
 
 .dashboard-card {
-    border-radius: 12px;
+    border-radius: var(--radius-card);
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-card);
     transition: all 0.25s ease;
 }
 
 .dashboard-card:hover {
     transform: translateY(-3px);
+}
+
+.dashboard-card h5 {
+    color: var(--text-heading);
+    font-weight: 700;
+}
+
+.dashboard-card small {
+    color: var(--text-secondary) !important;
 }
 
 .dashboard-icon {
@@ -64,9 +230,21 @@ small {
     font-size: 18px;
 }
 
-/* ===============================
-   TOP BAR (SEARCH + BUTTON)
-================================= */
+@media (max-width: 576px) {
+    .dashboard-card h5 {
+        font-size: 16px;
+    }
+    .dashboard-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+}
+
+
+/* ================================================
+   SECCIÓN 8: BARRA SUPERIOR (SEARCH + BOTÓN)
+   ================================================ */
 
 .topbar-container {
     display: flex;
@@ -75,82 +253,155 @@ small {
     align-items: center;
 }
 
+@media (max-width: 576px) {
+    .topbar-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .create-btn {
+        width: 100%;
+    }
+}
+
+/* --- Search Input --- */
 .search-container {
     position: relative;
     flex: 1;
     min-width: 220px;
-}
-
-.search-container input {
-    padding-left: 38px;
-    border-radius: 10px;
-    height: 42px;
+    max-width: 420px;
 }
 
 .search-icon {
     position: absolute;
     top: 50%;
-    left: 12px;
+    left: 14px;
     transform: translateY(-50%);
-    color: #6c757d;
+    font-size: 15px;
+    color: var(--text-muted);
+    transition: color 0.25s ease;
 }
 
+.search-container:focus-within .search-icon {
+    color: var(--accent-focus);
+}
+
+.search-input {
+    padding-left: 40px;
+    height: 42px;
+    border-radius: var(--radius-input);
+    border: 2px solid var(--border-input);
+    background-color: var(--bg-search);
+    color: var(--text-primary);
+    transition: all 0.25s ease;
+    width: 100%;
+}
+
+.search-input::placeholder {
+    color: var(--text-muted);
+}
+
+.search-input:focus {
+    border-color: var(--accent-focus);
+    box-shadow: 0 0 0 3px var(--accent-search-focus);
+    outline: none;
+    background-color: var(--bg-search);
+    color: var(--text-primary);
+}
+
+/* --- Botón Crear --- */
 .create-btn {
     height: 42px;
-    border-radius: 10px;
-    padding: 0 16px;
+    border-radius: var(--radius-btn);
+    padding: 0 18px;
     white-space: nowrap;
+    background-color: var(--bg-btn-primary);
+    color: #ffffff;
+    border: 1px solid var(--bg-btn-primary);
+    font-weight: 500;
+    transition: all 0.25s ease;
 }
 
-/* ===============================
-   TABLE
-================================= */
+.create-btn:hover {
+    background-color: var(--bg-btn-hover);
+    border-color: var(--bg-btn-hover);
+    transform: translateY(-1px);
+    color: #ffffff;
+}
+
+.create-btn:focus {
+    box-shadow: 0 0 0 3px rgba(30, 41, 59, 0.25);
+}
+
+.create-btn:active {
+    transform: scale(0.98);
+}
+
+
+/* ================================================
+   SECCIÓN 9: TABLA
+   ================================================ */
+
+.table-wrapper {
+    border-radius: var(--radius-table);
+    overflow: hidden;
+}
 
 .table {
-    background: #BFBFBF; /* gris suave */
-    border-radius: 12px;
+    background-color: var(--bg-table);
+    color: var(--text-table);
+    border-radius: var(--radius-table);
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    box-shadow: var(--shadow-table);
+    margin-bottom: 0;
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--text-table);
 }
 
-
-body:not(.dark-mode) .table-hover tbody tr:hover {
-    background-color: #e9ecef; /* hover gris claro elegante */
-}
-
-/* ===============================
-   TABLE HEADER - LIGHT MODE PREMIUM
-================================= */
-
-.table thead th {
-    background-color: #1f2937; /* gris oscuro elegante */
-    color: #ffffff;
+.table th {
     font-weight: 600;
-    border-bottom: 2px solid #e5e7eb;
-    letter-spacing: 0.3px;
+    font-size: 16px;
 }
 
-.table thead {
-    box-shadow: inset 0 -1px 0 rgba(0,0,0,0.05);
+.table td {
+    font-size: 16px;
 }
 
 .table th,
 .table td {
     vertical-align: middle;
+    border-color: var(--border-color);
+    background-color: var(--bg-table) !important;
+    color: var(--text-table);
 }
 
-.table-hover tbody tr:hover {
-    background-color: #D6D6D6;
+/* Encabezado de tabla */
+.table thead th {
+    background-color: var(--bg-table-head) !important;
+    color: #ffffff;
+    font-weight: 600;
+    border-bottom: 2px solid var(--border-color);
+    letter-spacing: 0.3px;
 }
 
-/* ===============================
-   ACTION BUTTONS
-================================= */
+.table thead {
+    --bs-table-bg: var(--bg-table-head);
+}
+
+/* Hover en filas */
+.table-hover tbody tr:hover td {
+    background-color: var(--bg-table-hover) !important;
+    color: var(--text-table);
+}
+
+
+/* ================================================
+   SECCIÓN 10: BOTONES DE ACCIÓN (editar / eliminar)
+   ================================================ */
 
 .action-btn {
     border: none;
     background: transparent;
-    color: #6c757d;
+    color: var(--text-secondary);
     font-size: 18px;
     transition: all 0.25s ease;
     padding: 6px 10px;
@@ -158,63 +409,35 @@ body:not(.dark-mode) .table-hover tbody tr:hover {
 }
 
 .action-btn:hover {
-    background: #f1f3f5;
+    background: var(--bg-table-hover);
     transform: scale(1.1);
 }
 
 .action-edit:hover {
-    color: #0d6efd;
+    color: var(--accent-edit);
 }
 
 .action-delete:hover {
-    color: #dc3545;
+    color: var(--accent-delete);
 }
 
-/* ===============================
-   PAGINATION (CUSTOM STYLE)
-================================= */
-
-.pagination .page-link {
-    border: none;
-    color: #212529;
-    background: transparent;
-    transition: all 0.2s ease;
+/* Botones outline dentro de tabla */
+.table .btn-outline-primary:hover {
+    background-color: var(--accent-edit);
+    color: #ffffff;
+    border-color: var(--accent-edit);
 }
 
-.pagination .page-item.active .page-link {
-    background: #212529;
-    color: white;
-    border-radius: 8px;
+.table .btn-outline-danger:hover {
+    background-color: var(--accent-delete);
+    color: #ffffff;
+    border-color: var(--accent-delete);
 }
 
-.pagination .page-link:hover {
-    background: #e9ecef;
-    color: #212529;
-}
 
-/* ===============================
-   TABLE ANIMATIONS
-================================= */
-
-#productTable {
-    transition: all 0.25s ease;
-}
-
-.table-fade-out {
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.25s ease;
-}
-
-.table-fade-in {
-    opacity: 1;
-    transform: translateY(0);
-    transition: all 0.25s ease;
-}
-
-/* ===============================
-   ROW EFFECTS
-================================= */
+/* ================================================
+   SECCIÓN 11: ANIMACIONES DE FILAS
+   ================================================ */
 
 .row-new {
     animation: fadeInUp 0.5s ease;
@@ -242,177 +465,139 @@ body:not(.dark-mode) .table-hover tbody tr:hover {
     transition: all 0.4s ease;
 }
 
-/* ===============================
-   TOAST
-================================= */
-
-.toast {
-    border-radius: 10px;
+/* Animación tabla al cargar */
+#productTable {
+    transition: all 0.25s ease;
 }
 
-/* ===============================
-   DARK MODE SUPPORT (optional)
-================================= */
-
-body.dark {
-    background: #121212;
-    color: white;
+.table-fade-out {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.25s ease;
 }
 
-body.dark .card {
-    background: #1e1e1e;
-    color: white;
+.table-fade-in {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.25s ease;
 }
 
-body.dark table {
-    color: white;
+
+/* ================================================
+   SECCIÓN 12: PAGINACIÓN
+   ================================================ */
+
+.pagination {
+    gap: 8px;
 }
 
-body.dark input {
-    background: #2a2a2a;
-    color: white;
-    border: 1px solid #555;
+.pagination .page-link {
+    border-radius: var(--radius-pagination) !important;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font-weight: 500;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-pagination);
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+    margin-left: 0 !important;
 }
 
-/* ===============================
-   MOBILE OPTIMIZATION
-================================= */
-
-@media (max-width: 576px) {
-
-    .dashboard-card h5 {
-        font-size: 16px;
-    }
-
-    .dashboard-icon {
-        width: 32px;
-        height: 32px;
-        font-size: 14px;
-    }
-
-    .topbar-container {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .create-btn {
-        width: 100%;
-    }
-
+.pagination .page-link:hover {
+    background-color: var(--bg-table-hover);
+    color: var(--text-heading);
+    transform: translateY(-2px);
 }
 
-/* ===============================
-   DARK MODE PREMIUM
-================================= */
-
-body.dark-mode {
-    background-color: #0f172a; /* azul gris oscuro elegante */
-    color: #f1f5f9;
-}
-
-/* Cards */
-body.dark-mode .card {
-    background-color: #1e293b;
-    color: #f1f5f9;
-    border-color: #334155;
-}
-
-/* Header oscuro */
-body.dark-mode .card.bg-dark {
-    background-color: #111827 !important;
-}
-
-/* Tabla */
-body.dark-mode .table {
-    background-color: #1e293b;
-    color: #f1f5f9;
-}
-
-body.dark-mode .table thead {
-    background-color: #0f172a;
-    color: #f1f5f9;
-}
-
-body.dark-mode .table-hover tbody tr:hover {
-    background-color: #334155;
-}
-
-/* Inputs */
-body.dark-mode input,
-body.dark-mode .form-control {
-    background-color: #0f172a;
-    color: #f1f5f9;
-    border: 1px solid #334155;
-}
-
-body.dark-mode input::placeholder {
-    color: #94a3b8;
-}
-
-/* Input focus */
-body.dark-mode .form-control:focus {
-    background-color: #0f172a;
+.pagination .page-item.active .page-link {
+    background-color: var(--bg-page-active);
+    border-color: var(--bg-page-active);
     color: #ffffff;
-    border-color: #64748b;
+    border-radius: var(--radius-pagination) !important;
+}
+
+.pagination .page-link:focus {
     box-shadow: none;
 }
 
-/* Botones */
-body.dark-mode .btn-dark {
-    background-color: #334155;
-    border-color: #334155;
+
+/* ================================================
+   SECCIÓN 13: TOAST / NOTIFICACIONES
+   ================================================ */
+
+.toast {
+    border-radius: var(--radius-toast);
+    overflow: hidden;
+    border: 1px solid var(--border-toast);
+    box-shadow: var(--shadow-toast);
+    background-color: var(--bg-toast);
+    color: var(--text-primary);
 }
 
-body.dark-mode .btn-dark:hover {
-    background-color: #475569;
+.toast-header {
+    background-color: var(--bg-toast-header);
+    color: var(--text-heading);
+    border-bottom: 1px solid var(--border-toast);
 }
 
-/* Botón outline */
-body.dark-mode .btn-outline-dark {
-    color: #f1f5f9;
-    border-color: #f1f5f9;
+.toast-body {
+    background-color: transparent;
+    color: var(--text-secondary);
 }
 
-/* Modales */
-body.dark-mode .modal-content {
-    background-color: #1e293b;
-    color: #f1f5f9;
-    border: 1px solid #334155;
+.btn-close {
+    filter: invert(1) brightness(1.8);
 }
 
-body.dark-mode .modal-header,
-body.dark-mode .modal-footer {
-    border-color: #334155;
+
+/* ================================================
+   SECCIÓN 14: MODALES
+   ================================================ */
+
+.modal-content {
+    background-color: var(--bg-modal);
+    color: var(--text-primary);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-card);
 }
 
-/* Toast */
-body.dark-mode .toast {
-    background-color: #1e293b;
-    color: #f1f5f9;
+.modal-header,
+.modal-footer {
+    border-color: var(--border-color);
 }
 
-/* Pagination */
-body.dark-mode .pagination .page-link {
-    color: #f1f5f9;
+/* Inputs dentro de modales */
+input,
+.form-control {
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+    border: 1px solid var(--border-input);
 }
 
-body.dark-mode .pagination .page-item.active .page-link {
-    background-color: #475569;
-    border-radius: 8px;
+input::placeholder,
+.form-control::placeholder {
+    color: var(--text-muted);
 }
 
-/* Search icon */
-body.dark-mode .search-icon {
-    color: #94a3b8;
+.form-control:focus {
+    background-color: var(--bg-input);
+    color: var(--text-heading);
+    border-color: var(--accent-focus);
+    box-shadow: 0 0 0 2px var(--accent-search-focus);
 }
 
-/* ===============================
-   DARK TOGGLE BUTTON
-================================= */
+
+/* ================================================
+   SECCIÓN 15: BOTÓN DE TOGGLE DE TEMA (dark/light)
+   ================================================ */
 
 .dark-toggle-btn {
-    background: rgba(255,255,255,0.15);
-    border: 1px solid rgba(255,255,255,0.25);
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: white;
     width: 40px;
     height: 40px;
@@ -424,552 +609,16 @@ body.dark-mode .search-icon {
 }
 
 .dark-toggle-btn:hover {
-    background: rgba(255,255,255,0.25);
+    background: rgba(255, 255, 255, 0.22);
     transform: scale(1.05);
 }
 
-/* Cuando está en modo dark */
-body.dark-mode .dark-toggle-btn {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.15);
-}
-
-body.dark-mode .dark-toggle-btn:hover {
-    background: rgba(255,255,255,0.15);
-}
-
-/* ===============================
-   DARK MODE - DASHBOARD FIX
-================================= */
-
-body.dark-mode .dashboard-card {
-    background-color: #1e293b;
-    border-color: #334155;
-}
-
-/* Títulos grandes */
-body.dark-mode .dashboard-card h5 {
-    color: #f1f5f9;
-}
-
-/* Texto pequeño (antes text-muted) */
-body.dark-mode .dashboard-card small {
-    color: #94a3b8 !important;
-}
-
-/* Asegurar que text-muted no quede gris Bootstrap */
-body.dark-mode .text-muted {
-    color: #94a3b8 !important;
-}
-
-body.dark-mode .dashboard-card h5 {
-    color: #ffffff;
-    font-weight: 700;
-}
-
-/* ===============================
-   DARK MODE - TABLE FIX
-================================= */
-
-/* ===== DARK TABLE FIX REAL ===== */
-
-body.dark-mode .table {
-    --bs-table-bg: #1e293b;
-    --bs-table-striped-bg: #273449;
-    --bs-table-hover-bg: #334155;
-    --bs-table-color: #e2e8f0;
-    color: #e2e8f0;
-}
-
-
-
-/* Forzar fondo en celdas */
-body.dark-mode .table th,
-body.dark-mode .table td {
-    background-color: #1e293b !important;
-    color: #f1f5f9;
-    border-color: #334155;
-}
-
-/* Header más oscuro */
-body.dark-mode .table thead th {
-    background-color: #0b1220 !important; /* más oscuro */
-    color: #ffffff;
-    border-bottom: 2px solid #334155;
-    font-weight: 600;
-    letter-spacing: 0.3px;
-}
-
-
-
-body.dark-mode .table thead {
-    --bs-table-bg: #0b1220;
-}
-
-/* Hover elegante */
-body.dark-mode .table-hover tbody tr:hover td {
-    background-color: #334155 !important;
-}
-
-/* Quitar blanco de table-striped si algún día lo usas */
-body.dark-mode .table-striped > tbody > tr:nth-of-type(odd) > td {
-    background-color: #1e293b !important;
-}
-
-/* =====================================
-   TABLE WRAPPER FIX
-===================================== */
-
-.table-wrapper {
-    border-radius: 16px;
-    overflow: hidden;
-    background-color: inherit;
-}
-
-.table {
-    margin-bottom: 0;
-}
-
-/* ===============================
-   DARK MODE - TABLE HOVER FIX
-================================= */
-
-/* Quitar hover blanco de Bootstrap */
-body.dark-mode .table-hover tbody tr:hover {
-    background-color: #273449 !important; /* hover oscuro elegante */
-    color: #ffffff;
-}
-
-/* Mantener fondo oscuro base */
-body.dark-mode .table {
-    background-color: #1e293b;
-    color: #e2e8f0;
-}
-
-/* Bordes más suaves */
-body.dark-mode .table td,
-body.dark-mode .table th {
-    border-color: #334155;
-}
-
-/* ===============================
-   DARK MODE - ACTION BUTTONS FIX
-================================= */
-
-body.dark-mode .table .btn-outline-primary:hover {
-    background-color: #2563eb;
-    color: #ffffff;
-    border-color: #2563eb;
-}
-
-body.dark-mode .table .btn-outline-danger:hover {
-    background-color: #dc2626;
-    color: #ffffff;
-    border-color: #dc2626;
-}
-
-/* ===============================
-   DARK MODE - FIX ACTION BUTTONS
-================================= */
-
-body.dark-mode .action-btn {
-    color: #cbd5e1;
-}
-
-body.dark-mode .action-btn:hover {
-    background: #334155;   /* fondo oscuro elegante */
-    transform: scale(1.1);
-}
-
-/* Edit icon */
-body.dark-mode .action-edit:hover {
-    color: #3b82f6; /* azul moderno */
-}
-
-/* Delete icon */
-body.dark-mode .action-delete:hover {
-    color: #ef4444; /* rojo moderno */
-}
-
-/* ===============================
-   DARK MODE - PAGINATION FIX
-================================= */
-
-body.dark-mode .pagination .page-link {
-    background-color: transparent;
-    color: #cbd5e1;
-    border: 1px solid #334155;
-}
-
-/* Hover elegante oscuro */
-body.dark-mode .pagination .page-link:hover {
-    background-color: #334155;
-    color: #ffffff;
-    border-color: #475569;
-}
-
-/* Página activa */
-body.dark-mode .pagination .page-item.active .page-link {
-    background-color: #475569;
-    border-color: #475569;
-    color: #ffffff;
-}
-
-/* Quitar focus blanco feo */
-body.dark-mode .pagination .page-link:focus {
-    box-shadow: none;
-}
-
-/* ===============================
-   PAGINATION - PREMIUM PILL STYLE
-================================= */
-
-/* Espaciado entre botones */
-.pagination {
-    gap: 6px;
-}
-
-/* Base */
-.pagination .page-link {
-    border-radius: 999px; /* efecto píldora */
-    padding: 6px 14px;
-    font-weight: 500;
-    border: 1px solid transparent;
-    transition: all 0.2s ease;
-}
-
-/* Light mode */
-.pagination .page-link {
-    background-color: transparent;
+body.light-mode .dark-toggle-btn {
+    background: rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.15);
     color: #1f2937;
 }
 
-.pagination .page-link:hover {
-    background-color: #e5e7eb;
-    color: #111827;
+body.light-mode .dark-toggle-btn:hover {
+    background: rgba(0, 0, 0, 0.15);
 }
-
-/* Activo (light) */
-.pagination .page-item.active .page-link {
-    background-color: #111827;
-    color: #ffffff;
-}
-
-/* ===============================
-   PAGINATION - MODERN SQUARE STYLE
-================================= */
-
-.pagination {
-    gap: 8px;
-}
-
-/* Base */
-.pagination .page-link {
-    border-radius: 10px; /* cuadrado elegante */
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    border: 1px solid #dee2e6;
-}
-
-/* Light mode */
-.pagination .page-link {
-    background-color: #ffffff;
-    color: #1f2937;
-}
-
-.pagination .page-link:hover {
-    background-color: #f3f4f6;
-    transform: translateY(-2px);
-}
-
-/* Activo light */
-.pagination .page-item.active .page-link {
-    background-color: #111827;
-    color: #ffffff;
-    border-color: #111827;
-}
-
-/* Quitar focus azul feo */
-.pagination .page-link:focus {
-    box-shadow: none;
-}
-
-/* ===============================
-   DARK MODE - SQUARE STYLE
-================================= */
-
-body.dark-mode .pagination .page-link {
-    background-color: #1e293b;
-    color: #cbd5e1;
-    border: 1px solid #334155;
-}
-
-body.dark-mode .pagination .page-link:hover {
-    background-color: #334155;
-    color: #ffffff;
-    transform: translateY(-2px);
-}
-
-body.dark-mode .pagination .page-item.active .page-link {
-    background-color: #475569;
-    border-color: #475569;
-    color: #ffffff;
-}
-
-
-/* ===============================
-   PAGINATION FIX REAL
-================================= */
-
-/* Quitar comportamiento Bootstrap que rompe bordes */
-.pagination .page-item + .page-item .page-link {
-    margin-left: 0 !important;
-}
-
-/* Asegurar separación visual real */
-.pagination {
-    gap: 8px;
-}
-
-
-/* Forzar bordes redondeados SIEMPRE */
-.pagination .page-link {
-    border-radius: 10px !important;
-}
-
-/* Asegurar activo también */
-.pagination .page-item.active .page-link {
-    border-radius: 10px !important;
-}
-
-/* ===============================
-   DARK MODE - TOAST FIX
-================================= */
-
-body.dark-mode .toast {
-    background-color: #1e293b;
-    color: #f1f5f9;
-    border: 1px solid #334155;
-}
-
-/* Header del toast */
-body.dark-mode .toast-header {
-    background-color: #0f172a;
-    color: #ffffff;
-    border-bottom: 1px solid #334155;
-}
-
-/* Quitar fondo blanco interno */
-body.dark-mode .toast-header .btn-close {
-    filter: invert(1);
-}
-
-/* Cuerpo del toast */
-body.dark-mode .toast-body {
-    background-color: #1e293b;
-    color: #e2e8f0;
-}
-
-/* ===============================
-   HEADER CARD RADIUS
-================================= */
-
-.card {
-    border-radius: 16px;
-    overflow: hidden; /*
-}
-
-/* Header principal */
-.card.bg-dark {
-    border-radius: 16px;
-}
-
-
-.card.bg-dark .card-body {
-    border-radius: 16px;
-}
-
-body.dark-mode .card {
-    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-}
-
-/* =====================================
-   TOAST PREMIUM FIX
-===================================== */
-
-.toast {
-    border-radius: 14px;
-    overflow: hidden;
-    border: none;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-}
-
-/* Header */
-.toast-header {
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-
-/* ===============================
-   DARK MODE TOAST
-=============================== */
-
-body.dark-mode .toast {
-    background-color: #1e293b;
-    color: #f1f5f9;
-    border: 0.5px solid #334155;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.45);
-}
-
-body.dark-mode .toast-header {
-    background-color: #0f172a;
-    color: #ffffff;
-    border-bottom: 1px solid #334155;
-}
-
-body.dark-mode .toast-body {
-    background-color: transparent;
-    color: #cbd5e1;
-}
-
-
-body.dark-mode .btn-close {
-    filter: invert(1) brightness(1.8);
-}
-
-/* =========================================
-   SEARCH BAR PREMIUM - LIGHT MODE
-========================================= */
-
-.search-container {
-    position: relative;
-    width: 100%;
-    max-width: 420px;
-}
-
-.search-icon {
-    position: absolute;
-    top: 50%;
-    left: 14px;
-    transform: translateY(-50%);
-    font-size: 15px;
-    color: #9ca3af;
-    transition: all 0.25s ease;
-}
-
-.search-input {
-    padding-left: 40px;
-    height: 42px;
-    border-radius: 12px;
-    border: 2.3px solid #969696;
-    background-color: #ffffff;
-    transition: all 0.25s ease;
-}
-
-
-/* Focus elegante */
-.search-input:focus {
-    border-color: #1e293b;
-    box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
-    outline: none;
-}
-
-/* Icono cambia cuando escribes */
-.search-container:focus-within .search-icon {
-    color: #6366f1;
-}
-
-/* =====================================
-   CREATE BUTTON CUSTOM
-===================================== */
-
-.create-btn {
-    background-color: #1e293b;
-    color: #ffffff;
-    border: 1px solid #1e293b;
-    border-radius: 12px;
-    padding: 8px 18px;
-    font-weight: 500;
-    transition: all 0.25s ease;
-}
-
-/* Hover elegante */
-.create-btn:hover {
-    background-color: #273449;
-    border-color: #273449;
-    transform: translateY(-1px);
-    color: #ffffff;
-}
-
-/* Focus moderno */
-.create-btn:focus {
-    box-shadow: 0 0 0 3px rgba(30,41,59,0.25);
-}
-
-/* Active */
-.create-btn:active {
-    transform: scale(0.98);
-}
-
-/* =========================================
-   DARK MODE SEARCH
-========================================= */
-
-body.dark-mode .search-input {
-    background-color: #1e293b;
-    border: 1.5px solid #334155;
-    color: #f1f5f9;
-}
-
-body.dark-mode .search-input::placeholder {
-    color: #94a3b8;
-}
-
-body.dark-mode .search-input:focus {
-    background-color: #1e293b;
-    border-color: #1e293b;
-    box-shadow: 0 0 0 2px #3A4657;
-    color: #ffffff;
-}
-
-/* Icono en dark */
-body.dark-mode .search-icon {
-    color: #64748b;
-}
-
-body.dark-mode .search-container:focus-within .search-icon {
-    color: #6366f1;
-}
-
-/* =========================================
-   THEME TRANSITION SMOOTH EFFECT
-========================================= */
-
-/* Transición global suave */
-body,
-.card,
-.table,
-.table th,
-.table td,
-.pagination .page-link,
-.search-input,
-.create-btn,
-.toast,
-.modal-content {
-    transition:
-        background-color 0.75s ease,
-        color 0.55s ease,
-        border-color 0.45s ease,
-        box-shadow 0.45s ease;
-}
-
-i,
-.bi {
-    transition: color 0.35s ease;
-}
-
